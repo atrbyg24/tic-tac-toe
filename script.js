@@ -97,7 +97,7 @@ function GameController(
 function ScreenController() {
     const game = GameController();
     const playerTurnDiv = document.querySelector('.turn');
-    const boardDiv = document.querySelector('board');
+    const boardDiv = document.querySelector('.board');
 
     const updateScreen = () => {
         boardDiv.textContent = "";
@@ -109,7 +109,7 @@ function ScreenController() {
             row.forEach((cell, col_index) => {
                 const cellButton = document.createElement("button");
                 cellButton.classList.add("cell");
-                cell.dataset.row = row_index;
+                cellButton.dataset.row = row_index;
                 cellButton.dataset.column = col_index;
                 cellButton.textContent = cell.getValue();
                 boardDiv.appendChild(cellButton);    
@@ -127,6 +127,7 @@ function ScreenController() {
         game.playRound(selectedRow,selectedColumn);
         updateScreen();
     }
+
     boardDiv.addEventListener("click",clickHandlerBoard);
     updateScreen();
 }
