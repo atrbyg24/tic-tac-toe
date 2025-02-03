@@ -90,10 +90,45 @@ function GameController(
     printNewRound();
 
     return {
-        playRound, getActivePlayer
-    };
-
+        playRound, getActivePlayer, getBoard: board.getBoard
+        };
 }
 
+function ScreenController() {
+    const game = GameController();
+    const playerTurnDiv = document.querySelector('.turn');
+    const boardDiv = document.querySelector('board');
 
-const game = GameController();
+    const updateScreen = () => {
+        boardDiv.textContent = "";
+        const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+
+        board.forEach((row,row_index) => {
+            row.forEach((cell, col_index) => {
+                const cellButton = document.createElement("button");
+                cellButton.classList.add("cell");
+                cell.dataset.row = row_index;
+                cellButton.dataset.column = col_index;
+                cellButton.textContent = cell.getValue();
+                boardDiv.appendChild(cellButton);    
+            
+            })
+        })
+    }
+
+    function clickHandlerBoard(e) {
+        const selectedRow = e.target.dataset.row;
+        const selectedColumn = e.target.dataset.column;
+
+        if (!selectedRow || !selectedColumn) return;
+
+        game.playRound(selectedRow,selectedColumn);
+        updateScreen();
+    }
+    boardDiv.addEventListener("click",clickHandlerBoard);
+    updateScreen();
+}
+
+ScreenController();
