@@ -148,7 +148,7 @@ function ScreenController() {
                 cellButton.classList.add("cell");
                 cellButton.dataset.row = row_index;
                 cellButton.dataset.column = col_index;
-                cellButton.textContent = cell.getValue();
+                cellButton.textContent = cell.getValue() === 0 ? '' : cell.getValue() === 1 ? 'X' : 'O';
                 boardDiv.appendChild(cellButton);    
             
             })
