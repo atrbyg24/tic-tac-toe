@@ -55,6 +55,7 @@ function GameController(
     playerTwoName = "Player Two"
 ) {
     const board = Gameboard();
+    const gameBoard = board.getBoard();
 
     const players = [
         {
@@ -84,30 +85,50 @@ function GameController(
     }
 
     const playRound = (row,col) => {
+        if (gameOver) return;
+        
         console.log(`Marking cell ${row},${col}...`);
-        board.markCell(row,col,getActivePlayer().mark);
-        switchPlayerTurn();
-        printNewRound();
+        if (checkGameWinner()) {
+            console.log(`${getActivePlayer().name} has won.`);
+            return;
+        }
+        if (!checkGameDraw()) {
+            console.log("It's a draw.");
+            return;
+        }
+        if (gameBoard[row][col].getValue() === 0) {
+            board.markCell(row,col,getActivePlayer().mark);
+            switchPlayerTurn();
+            printNewRound();
+        }
+    }
+
+    const increaseScore = () => {
+        getActivePlayer().score++;
     }
 
     const checkGameWinner = () => {
         // Check rows
         for (let i = 0; i < 3; i++) {
-            if (board[i][0].getValue() === board[i][1].getValue() && board[i][1].getValue() === board[i][2].getValue() && board[i][0].getValue() !== 0) {
+            if (gameBoard[i][0].getValue() === gameBoard[i][1].getValue() && gameBoard[i][1].getValue() === gameBoard[i][2].getValue() && gameBoard[i][0].getValue() !== 0) {
+                increaseScore();
                 return true;
             }
         }
         // Check columns
         for (let j = 0; j < 3; j++) {
-            if (board[0][j].getValue() === board[1][j].getValue() && board[1][j].getValue() === board[2][j].getValue() && board[0][j].getValue() !== 0) {
+            if (gameBoard[0][j].getValue() === gameBoard[1][j].getValue() && gameBoard[1][j].getValue() === gameBoard[2][j].getValue() && gameBoard[0][j].getValue() !== 0) {
+                increaseScore();
                 return true;
             }
         }
         // Check diagonals
-        if (board[0][0].getValue() === board[1][1].getValue() && b[1][1].getValue() === board[2][2].getValue() && board[0][0].getValue() !== 0) {
+        if (gameBoard[0][0].getValue() === gameBoard[1][1].getValue() && gameBoard[1][1].getValue() === gameBoard[2][2].getValue() && gameBoard[0][0].getValue() !== 0) {
+            increaseScore();
             return true;
         }
-        if (board[0][2].getValue() === board[1][1].getValue() && board[1][1].getValue() === board[2][0].getValue() && board[0][2].getValue() !== 0) {
+        if (gameBoard[0][2].getValue() === gameBoard[1][1].getValue() && gameBoard[1][1].getValue() === gameBoard[2][0].getValue() && gameBoard[0][2].getValue() !== 0) {
+            increaseScore();
             return true;
         }
         return false;
@@ -116,7 +137,7 @@ function GameController(
     const checkGameDraw = () => {
         for (let i = 0; i < 3;i++) {
             for (let j = 0;j < 3;j++) {
-                if (board[i][j].getValue === 0) {
+                if (gameBoard[i][j].getValue === 0) {
                     return false
                 }
             }
@@ -161,7 +182,7 @@ function ScreenController() {
 
         if (!selectedRow || !selectedColumn) return;
 
-        game.playRound(selectedRow,selectedColumn);
+        game.playRound(parseInt(selectedRow),parseInt(selectedColumn));
         updateScreen();
     }
 
