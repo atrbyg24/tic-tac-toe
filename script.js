@@ -8,7 +8,7 @@ function Gameboard() {
 
     for (let i = 0; i < 3; i ++) {
         board[i] = [];
-        for (let j = 0; j < 0;j++){
+        for (let j = 0; j < 3;j++){
             board[i].push(Cell())
         }
     }
@@ -24,7 +24,9 @@ function Gameboard() {
         console.log(boardWithCellValues);
     }
 
-    return { getBoard, markCell, printBoard};
+    return { 
+        getBoard, markCell, printBoard
+    };
 }
 
 
@@ -36,7 +38,6 @@ A Cell represents one square on the board and can be
 */
 function Cell() {
     let value = 0;
-
     
     const changeCell = (playerMark) => {
         value = playerMark;
@@ -45,7 +46,7 @@ function Cell() {
     const getValue = () => value;
 
     return {
-        changeCell,getValue
+        changeCell, getValue
     };
 }
 
@@ -75,15 +76,24 @@ function GameController(
     const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
-        board.printNewRound;
+        board.printBoard();
         console.log(`${getActivePlayer().name}'s turn.`);
     }
 
     const playRound = (row,col) => {
         console.log(`Marking cell ${row},${col}...`);
-        board.markCell(row,col,getActivePlayer.mark);
+        board.markCell(row,col,getActivePlayer().mark);
+        switchPlayerTurn();
+        printNewRound();
     }
 
-    switchPlayerTurn();
     printNewRound();
+
+    return {
+        playRound, getActivePlayer
+    };
+
 }
+
+
+const game = GameController();
