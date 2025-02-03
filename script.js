@@ -59,11 +59,13 @@ function GameController(
     const players = [
         {
             name: playerOneName,
-            mark: 1
+            mark: 'X',
+            score: 0
         },
         {
             name: playerTwoName,
-            mark: 2
+            mark: 'O',
+            score: 0
         }
     ];
 
