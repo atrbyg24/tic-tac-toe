@@ -59,12 +59,12 @@ function GameController(
     const players = [
         {
             name: playerOneName,
-            mark: 'X',
+            mark: 1,
             score: 0
         },
         {
             name: playerTwoName,
-            mark: 'O',
+            mark: 2,
             score: 0
         }
     ];
@@ -76,6 +76,7 @@ function GameController(
     };
 
     const getActivePlayer = () => activePlayer;
+    let gameOver = false;
 
     const printNewRound = () => {
         board.printBoard();
@@ -87,6 +88,40 @@ function GameController(
         board.markCell(row,col,getActivePlayer().mark);
         switchPlayerTurn();
         printNewRound();
+    }
+
+    const checkGameWinner = () => {
+        // Check rows
+        for (let i = 0; i < 3; i++) {
+            if (board[i][0].getValue() === board[i][1].getValue() && board[i][1].getValue() === board[i][2].getValue() && board[i][0].getValue() !== 0) {
+                return true;
+            }
+        }
+        // Check columns
+        for (let j = 0; j < 3; j++) {
+            if (board[0][j].getValue() === board[1][j].getValue() && board[1][j].getValue() === board[2][j].getValue() && board[0][j].getValue() !== 0) {
+                return true;
+            }
+        }
+        // Check diagonals
+        if (board[0][0].getValue() === board[1][1].getValue() && b[1][1].getValue() === board[2][2].getValue() && board[0][0].getValue() !== 0) {
+            return true;
+        }
+        if (board[0][2].getValue() === board[1][1].getValue() && board[1][1].getValue() === board[2][0].getValue() && board[0][2].getValue() !== 0) {
+            return true;
+        }
+        return false;
+    }
+
+    const checkGameDraw = () => {
+        for (let i = 0; i < 3;i++) {
+            for (let j = 0;j < 3;j++) {
+                if (board[i][j].getValue === 0) {
+                    return false
+                }
+            }
+        }
+        return true;
     }
 
     printNewRound();
