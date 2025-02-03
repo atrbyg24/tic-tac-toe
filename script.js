@@ -15,8 +15,8 @@ function Gameboard() {
 
     const getBoard = () => board;
 
-    const markCell = (row,column,player) => {
-        board[row][col].changeCell(player);
+    const markCell = (row,col,playerMark) => {
+        board[row][col].changeCell(playerMark);
     }
 
     const printBoard = () => {
@@ -38,8 +38,8 @@ function Cell() {
     let value = 0;
 
     
-    const changeCell = (player) => {
-        value = player;
+    const changeCell = (playerMark) => {
+        value = playerMark;
     }
 
     const getValue = () => value;
@@ -58,11 +58,11 @@ function GameController(
     const players = [
         {
             name: playerOneName,
-            token: 1
+            mark: 1
         },
         {
             name: playerTwoName,
-            token: 2
+            mark: 2
         }
     ];
 
@@ -79,4 +79,11 @@ function GameController(
         console.log(`${getActivePlayer().name}'s turn.`);
     }
 
+    const playRound = (row,col) => {
+        console.log(`Marking cell ${row},${col}...`);
+        board.markCell(row,col,getActivePlayer.mark);
+    }
+
+    switchPlayerTurn();
+    printNewRound();
 }
