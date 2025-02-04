@@ -194,6 +194,7 @@ function ScreenController() {
 
     function clickRestartBoard(e) {
         game.restartGame();
+        result.textContent = "";
         updateScreen();
     }
 
