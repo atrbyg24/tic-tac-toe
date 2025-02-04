@@ -77,6 +77,10 @@ function GameController(
     const getActivePlayer = () => activePlayer;
     let gameOver = false;
 
+    const changePlayerName = (playerName,index) => {
+        players[index].name = playerName;
+    }
+
     const printNewRound = () => {
         board.printBoard();
         console.log(`${getActivePlayer().name}'s turn.`);
@@ -146,7 +150,7 @@ function GameController(
     printNewRound();
 
     return {
-        playRound, getActivePlayer, checkGameDraw, checkGameWinner, restartGame, getBoard: board.getBoard
+        playRound, getActivePlayer, changePlayerName, checkGameDraw, checkGameWinner, restartGame, getBoard: board.getBoard
         };
 }
 
@@ -156,9 +160,13 @@ function ScreenController() {
     const boardDiv = document.querySelector('.board');
     const result = document.querySelector(".result");
     const restart = document.querySelector(".restart");
+    const changeName = document.querySelector(".change-names");
+    const favDialog = document.querySelector("#favDialog");
+    const submitBtn = favDialog.querySelector("#submitBtn");
+
 
     const updateScreen = () => {
-        boardDiv.textContent = "";
+        boardDiv.innerHTML = "";
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
@@ -200,6 +208,22 @@ function ScreenController() {
 
     boardDiv.addEventListener("click",clickHandlerBoard);
     restart.addEventListener("click", clickRestartBoard);
+    changeName.addEventListener("click", () => {
+        favDialog.showModal();
+    })
+    submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const playerOneName = favDialog.querySelector("#playerOneName");
+        const playerTwoName = favDialog.querySelector("#playerTwoName");
+        if (playerOneName.value !== "") { 
+            game.changePlayerName(playerOneName.value, 0);
+        }
+        if (playerTwoName.value !== "") {
+            game.changePlayerName(playerTwoName.value, 1);
+        }
+        favDialog.close();
+        updateScreen();
+    })
     updateScreen();
 }
 

@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    gap: 12px;
 }
 
 .board {
@@ -16,13 +17,24 @@
     background-color: yellow;
   }
   
-  .cell {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 64px;
-    border: 1px solid grey;
-    background: lightyellow;
-    cursor: pointer;
-  }
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 64px;
+  border: 1px solid grey;
+  background: lightyellow;
+  cursor: pointer;
+}
+
+.button-container {
+  display: flex;
+  gap: 48px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

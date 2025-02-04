@@ -8,11 +8,31 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    <dialog id="favDialog">
+        <form>
+          <p>
+            <label for="playerOneName">Player One Name</label>
+            <input type="text" name="playerOneName" id="playerOneName" placeholder="Player One">
+          </p>
+          <p>
+            <label for="playerTwoName">Player Two Name</label>
+            <input type="text" name="playerTwoName" id="playerTwoName" placeholder="Player Two">
+          </p>
+          <div>
+            <button id="submitBtn" value="default">Submit</button>
+          </div>
+        </form>
+      </dialog>
+      
     <div class="container">
-        <h1 class="turn"></h1>
+        <h1>Tic-Tac-Toe</h1>
+        <h2 class="turn"></h2>                        
         <div class="board"></div>
-        <h1 class="result"></h1>
-        <button type="button" class="restart">Restart</button>
+        <div class="button-container">
+            <button type="button" class="change-names">Change names</button>
+            <button type="button" class="restart">Restart</button>
+        </div>
+        <h2 class="result"></h2>
     </div>
 </body>
 </html>
