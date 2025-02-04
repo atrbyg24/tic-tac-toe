@@ -217,9 +217,13 @@ function ScreenController() {
         const playerTwoName = favDialog.querySelector("#playerTwoName");
         if (playerOneName.value !== "") { 
             game.changePlayerName(playerOneName.value, 0);
+        } else {
+            game.changePlayerName("Player One", 0);
         }
         if (playerTwoName.value !== "") {
             game.changePlayerName(playerTwoName.value, 1);
+        } else {
+            game.changePlayerName("Player Two", 1);
         }
         favDialog.close();
         updateScreen();
