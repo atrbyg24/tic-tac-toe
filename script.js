@@ -89,9 +89,7 @@ function GameController(
         if (checkGameWinner()) {
             return;
         }
-        if (!checkGameDraw()) {
-            result = document.querySelector(".result");
-            result.textContent = `${getActivePlayer().name} has won.`
+        else if (checkGameDraw()) {
             return;
         }
         if (gameBoard[row][col].getValue() === 0) {
@@ -125,15 +123,16 @@ function GameController(
     }
 
     const checkGameDraw = () => {
+        let boardSum = 0;
+        let boardProd = 1;
         for (let i = 0; i < 3;i++) {
             for (let j = 0;j < 3;j++) {
-                if (gameBoard[i][j].getValue === 0) {
-                    return false
+                boardSum += gameBoard[i][j].getValue();
+                boardProd *= gameBoard[i][j].getValue();
                 }
             }
+            return (boardSum * boardProd > 0);
         }
-        return true;
-    }
 
     printNewRound();
 
@@ -166,9 +165,9 @@ function ScreenController() {
             })
         })
         if (game.checkGameWinner()) {
-            result.textContent = `${activePlayer.name} has won.`;
-        }
-        if (!game.checkGameDraw()) {
+            result.textContent = `${activePlayer.name} has won!`;
+        } 
+        else if (game.checkGameDraw()) {
             result.textContent = "It's a draw.";
         }
     }
