@@ -134,10 +134,19 @@ function GameController(
             return (boardSum * boardProd > 0);
         }
 
+    const restartGame = () => {
+        for (let i = 0; i < 3; i ++) {
+            for (let j = 0; j < 3;j++){
+                gameBoard[i][j].changeCell(0);
+            }
+        }
+        activePlayer = players[0];
+    }
+
     printNewRound();
 
     return {
-        playRound, getActivePlayer, checkGameDraw, checkGameWinner, getBoard: board.getBoard
+        playRound, getActivePlayer, checkGameDraw, checkGameWinner, restartGame, getBoard: board.getBoard
         };
 }
 
@@ -146,6 +155,7 @@ function ScreenController() {
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
     const result = document.querySelector(".result");
+    const restart = document.querySelector(".restart");
 
     const updateScreen = () => {
         boardDiv.textContent = "";
@@ -182,7 +192,13 @@ function ScreenController() {
         updateScreen();
     }
 
+    function clickRestartBoard(e) {
+        game.restartGame();
+        updateScreen();
+    }
+
     boardDiv.addEventListener("click",clickHandlerBoard);
+    restart.addEventListener("click", clickRestartBoard);
     updateScreen();
 }
 

@@ -1,17 +1,7 @@
-body {
+.container {
     display: flex;
     align-items: center;
     flex-direction: column;
-}
-
-.turn {
-    display: flex;
-    justify-content: center;
-}
-
-.result {
-  display: flex;
-  justify-content: center;
 }
 
 .board {
